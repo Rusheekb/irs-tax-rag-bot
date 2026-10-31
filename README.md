@@ -151,7 +151,3 @@ I estimate about $5 to $10 in AWS usage, covered by free plan credits. Most of i
 4. Tax-year labels, so 2026 documents can be added without mixing years.
 5. A stronger answer model and more publications, including self-employment guides.
 6. User feedback and logging in the app.
-
----
-
-Built with [Claude Code](https://claude.com/claude-code) as a development assistant. I made the design decisions and validated results through evaluation.
