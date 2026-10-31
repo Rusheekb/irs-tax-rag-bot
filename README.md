@@ -32,6 +32,46 @@ flowchart LR
 | Answer model | Nova Lite | Fixed the errors Nova Micro made at a very low cost | Weaker than larger models when passages are thin |
 | Safety | Guardrails grounding check (grounding 0.7, relevance 0.5) | Blocks answers the passages don't support | Sometimes blocks answers that might be fine |
 
+## Build process
+
+Screenshots from the AWS console, in build order. Internal IDs and resource names are covered.
+
+**1. Uploaded the IRS publications to a private S3 bucket.**
+
+![Four IRS PDFs in S3](docs/build-process/01-s3-documents.png)
+
+**2. Created the knowledge base,** using S3 Vectors and Titan embeddings.
+
+![Knowledge base overview](docs/build-process/02-kb-overview.png)
+
+**3. First test.** The answer was right, but the first citation pointed to an unrelated passage about health insurance forms. It also included printer's notes from the PDF, and this led me to look closely at parsing and citations.
+
+![First knowledge base test, with an unrelated source chunk](docs/build-process/05a-first-kb-test.png)
+
+**4. Rebuilt the data source** with the Nova Pro parser and hierarchical chunking, after evaluation showed search was missing tables.
+
+![Data source settings](docs/build-process/03-data-source.png)
+
+**5. Synced the documents.** All four were scanned and added, with none failed.
+
+![Sync history showing four documents added](docs/build-process/04-sync-complete.png)
+
+**6. Tested the rebuilt knowledge base** with the strict prompt. The lifetime learning table can now be found, and the source chunk contains the $2,000 limit.
+
+![Rebuilt knowledge base answering with its source](docs/build-process/05-kb-test.png)
+
+**7. Added the guardrail** and saved a numbered version, so test results stay repeatable.
+
+![Guardrail version](docs/build-process/08-guardrail.png)
+
+**8. Evaluated each stage.** The stopped run used the fuller prompt I rejected, so it was ended early.
+
+![Evaluation runs](docs/build-process/06-evaluations.png)
+
+**9. Final scores,** which match Run 3 in the results table below.
+
+![Final evaluation scores](docs/build-process/07-evaluation-results.png)
+
 ## Results
 
 I evaluated each stage on 27 test questions with Bedrock's knowledge base evaluations: simple lookups, rules with conditions, exact form names, and questions the bot should refuse.
