@@ -141,7 +141,14 @@ streamlit run app.py
 
 ## Cost
 
-I estimate about $5 to $10 in AWS usage, covered by free plan credits. Most of it was one-time parsing and evaluation runs. Asking a question costs a fraction of a cent to about a cent.
+Building and evaluating this project used **$4.62** of AWS services, as of October 31, 2026, all covered by free plan credits.
+
+| Service | Cost |
+|---|---|
+| Amazon Bedrock (parsing, embeddings, models, evaluations, guardrail) | $4.59 |
+| Other (Cost Explorer, S3) | $0.02 |
+
+Nearly all of it was one-time build and testing work on October 30. Usage the next day was under one cent. I set a $10 monthly budget alert to catch any unexpected spending.
 
 ## Future improvements
 
